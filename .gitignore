@@ -112,3 +112,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+data/countyhealthrankings-analytic_data2021.csv
+data/NYT-covid-cases-deaths.csv
+data/SVI2018_US_COUNTY.csv

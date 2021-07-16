@@ -118,12 +118,10 @@ From the source data, the following initial features were engineered:
     - Tree-based models (decision tree, random forest)
     - K-Nearest Neighbors
     - Logistic Regression with `multi_class='multinomial'`
-<br>
 1. **One vs Rest (OVR) Meta-Classifiers** - one binary classification for each class vs the other classes, where the model with the highest probability score is used to predict the class of a new observation `n = number of classes`
     - Gradient Boost Classifier
     - linear Support Vector Machines
     - Logistic Regression with `multi_class='ovr'`
-<br>
 1. **One vs One (OVO) Meta-Classifier** - one binary classification for each pair of classes, where each new observation's class is predicted based on the majority vote amongst the n-models `n = 0.5* (n_classes* (n_classes - 1)))`
     - Support Vector Machines
 

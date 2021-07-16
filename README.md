@@ -151,16 +151,19 @@ When trained on the dataset including health measures, the health measures were 
 
 - Life expectancy
 - Percent of population with poor or fair health 
+- Percent of population hesitant or strongly hesitant towards COVID-19 vaccine
 - Percent of population uninsured 
 
 <img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Full Feature Set).jpg' align=center>
 
 When trained again on a dataset without health measures, the below socioeconomic and social vulnerability features proved most important:
 
-- Vaccine hesitancy
-- Per capita income
 - Percent of population identifying as White
-- SVI sub-measures (1) housing type & transportation, and (2) minority status & language
+- Per capita income
+- Percent of population hesitant or strongly hesitant towards COVID-19 vaccine
+- CDC's Social Vulnerability Index sub-measures 
+    - Housing type & transportation
+    - Minority status & language
 
 <img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Reduced Feature Set).jpg' align=center>
 
@@ -181,7 +184,7 @@ _____
 
 - Rerun models with a slimmer feature set, avoiding multicollinearity
 - Analyze at the county level with updated county-level case and death counts
-- Incorporate ICU/hospital capacity in impact calculation
+- Incorporate ICU/hospital capacity, loss of employment, and local measure of economic activity in impact calculation
 
 
 _____

@@ -4,6 +4,9 @@
 
 Kristin Cooper | July, 2021 | DTSC-FT-022221 | Instructor: James Irving
 
+<img src='./images/equity_equality.jpg' align=center>
+
+<center> Equality vs. equity <br> <i> <a href="interactioninstitute.org">Interaction Institute for Social Change</a> // Angus Maguire</i> </center>
 _______
 
 ## Purpose:
@@ -104,9 +107,9 @@ From the source data, the following initial features were engineered:
 - Percent of cases resulting in death, or 'deathrate' = (deaths / cases) * 100
 - Impact points = ((1 * cases per 100k) + (5 * deaths per 100k)) * deathrate
 - Impact category:
-    - High = > mean + (.8*(standard deviation))
-    - Low = < mean - (.8*(standard deviation)
-    - Average = between mean +/- (.8*(standard deviation))
+    - High = impact points > mean + (.8*(standard deviation))
+    - Low = impact points < mean - (.8*(standard deviation)
+    - Average = impact points within mean +/- (.8*(standard deviation))
 
 
 ### Modeling Techniques:
@@ -116,15 +119,13 @@ From the source data, the following initial features were engineered:
     - K-Nearest Neighbors
     - Logistic Regression with `multi_class='multinomial'`
 <br>
-2. **Meta-classifiers**
-
-    1. **One vs Rest (OVR)** - one binary classification for each class vs the other classes, where the model with the highest probability score is used to predict the class of a new observation `n = number of classes`. <br>Automatically used by:
-        - Gradient Boost Classifier
-        - linear Support Vector Machines
-        - Logistic Regression with `multi_class='ovr'`
-
-    2. **One vs One (OVO)** - one binary classification for each pair of classes, where each new observation's class is predicted based on the majority vote amongst the n-models `n = 0.5* (n_classes* (n_classes - 1)))`. <br>Automatically used by:
-        - Support Vector Machines
+1. **One vs Rest (OVR) Meta-Classifiers** - one binary classification for each class vs the other classes, where the model with the highest probability score is used to predict the class of a new observation `n = number of classes`
+    - Gradient Boost Classifier
+    - linear Support Vector Machines
+    - Logistic Regression with `multi_class='ovr'`
+<br>
+1. **One vs One (OVO) Meta-Classifier** - one binary classification for each pair of classes, where each new observation's class is predicted based on the majority vote amongst the n-models `n = 0.5* (n_classes* (n_classes - 1)))`
+    - Support Vector Machines
 
 
 ### Evaluation Metrics:
@@ -191,7 +192,7 @@ _____
 
 
 ### For further information:
-Please review the full EDA report [here](./EDA.ipynb) and modeling report [here,](./model.ipynb) or review the non-technical [presentation](./presentation.pdf)
+Please review the full EDA notebook [here](./EDA.ipynb) and modeling notebook [here,](./model.ipynb) or review the [non-technical presentation](./presentation.pdf)
 
 For any additional questions, please contact kcoop610@gmail.com.
 

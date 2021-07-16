@@ -118,12 +118,12 @@ From the source data, the following initial features were engineered:
     - Tree-based models (decision tree, random forest)
     - K-Nearest Neighbors
     - Logistic Regression with `multi_class='multinomial'`
-1. **One vs Rest (OVR) Meta-Classifiers** - one binary classification for each class vs the other classes, where the model with the highest probability score is used to predict the class of a new observation `n = number of classes`
+1. **One vs Rest (OVR) Meta-Classifiers** 
     - Gradient Boost Classifier
-    - linear Support Vector Machines
+    - linear Support Vector Machine
     - Logistic Regression with `multi_class='ovr'`
-1. **One vs One (OVO) Meta-Classifier** - one binary classification for each pair of classes, where each new observation's class is predicted based on the majority vote amongst the n-models `n = 0.5* (n_classes* (n_classes - 1)))`
-    - Support Vector Machines
+1. **One vs One (OVO) Meta-Classifier** 
+    - Support Vector Machine
 
 
 ### Evaluation Metrics:
@@ -132,18 +132,16 @@ Metrics for multiclass models could be calculated as either a macro average or a
 
 - **Overfitting** - the difference between the accuracy score on the training data and the accuracy score on the testing data
 
-- **Accuracy** - measure of how many predictions the model gets right
+- **Accuracy** & **AUC** - measures of how many predictions the model gets right
 
-- **AUC** - an alternative measure of model accuracy
-
-- **F1 Score** - represents the harmonic mean of precision (how many predicted positives are true positives) and recall (how many actual positives were correctly predicted)
+- **F1 Score** - the harmonic mean of precision (how many predicted positives are true positives) and recall (how many actual positives were correctly predicted)
 
 
 ____
 
 ## Results
 
-<img src='./images/map_Impact of COVID-19 Pandemic by State - Points.jpg' align=center>
+<img src='./images/map_Impact of COVID-19 Pandemic by State - Category.jpg' align=center>
 
 Based on population-controlled cases, deaths, and mortality rate of COVID-19, the following states experienced "high" impact of COVID-19: Arizona, South Dakota, Louisiana, Alabama, Mississippi, Pennsylvania, New Jersey, Connecticut, Rhode Island, and Massachusetts.
 

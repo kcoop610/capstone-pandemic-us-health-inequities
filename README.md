@@ -1,1 +1,217 @@
-# pandemic-impact-us-health-inequities
+# Social Determinants of Health & the COVID-19 Pandemic
+
+## Supervised Learning Classification Model Predicting the Spread & Mortality of COVID-19, Extensible to Future Pandemics/Epidemics
+
+Kristin Cooper | July, 2021 | DTSC-FT-022221 | Instructor: James Irving
+
+_______
+
+## Purpose:
+
+The purpose of this report is to study social, economic, and health inequities in the US and predict how those inequities influenced the spread and mortality of COVID-19 in a community/region. Predictions should be used to inform public policy and preparation for future pandemics/epidemics.
+
+My original intent was to perform this analysis at the county level. However, finding reliable county-level COVID-19 case and death reports proved difficult. 23 states had a total of ~83k cases and ~1700 deaths that were unattributable to a county, based on differences in reporting structure and unclear reporting protocols between where the case was treated vs where the patient lived. 
+
+Results described below are currently at the state level, with an intent to revisit the county-level data in the future.
+
+_______
+
+## Data:
+
+A variety of health, economic, social, and demographic data from the CDC and University of Wisconsin Public Health Institute was combined with COVID-19 case, death, and vaccine measures.
+
+### Features:
+
+<table border="0">
+ <tr align=left alight=top>
+    <td><b style="font-size:20px">COVID-19 Stats</b></td>
+    <td><b style="font-size:20px">Economic Measures</b></td>
+    <td><b style="font-size:20px">Health Measures</b></td>
+    <td><b style="font-size:20px">Social Measures</b></td>
+    <td><b style="font-size:20px">Demographics</b></td>
+ </tr>
+ <tr>
+    <td><ul>
+        <li>Case count</li>
+        <li>Death count</li>
+        <li>Vaccine hesitancy</li>
+        <li>CVAC vaccine rollout concern</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Per capita income</li>
+        <li>Median household income</li>
+        <li>Income inequality</li>
+        <li>Poverty rate</li>
+        <li>Unemployment rate</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Life expectancy and premature deaths</li>
+        <li>Smoking and excessive drinking</li>
+        <li>Obesity</li>
+        <li>Poor health days (physical & mental)</li>
+        <li>Physical inactivity</li>
+        <li>Preventable hospital stays</li>
+        <li>Ratio of population to primary care physicians</li>
+        <li>Flu vaccinations</li>
+        <li>Uninsured population</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Housing</li>
+        <li>Internet access</li>
+        <li>Vehicle access</li>
+        <li>Food environment and food insecurity</li>
+        <li>Education</li>
+        <li>Air and drinking water pollution</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Population and sq mileage</li>
+        <li>Rural vs urban area</li>
+        <li>Racial breakdown</li>
+        <li>Elderly and child populations</li>
+        </ul>
+     </td>
+    </tr>
+</table>
+
+### Sources:
+
+- [CDC’s Social Vulnerability Index](https://www.atsdr.cdc.gov/placeandhealth/svi/documentation/SVI_documentation_2018.html)
+
+- [CDC's Vaccine Hesitancy](https://data.cdc.gov/Vaccinations/Vaccine-Hesitancy-for-COVID-19-County-and-local-es/q9mh-h2tw)
+
+- [The University of Wisconsin Population Health Institute's County Health Rankings](https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources) 
+ 
+- [New York Times COVID Case and Death Counts](https://github.com/nytimes/covid-19-data)
+
+
+____
+
+## Approach:
+
+This is a multinomial classification problem with an engineered 3-class target.
+
+### Feature Engineering:
+
+From the source data, the following initial features were engineered:
+
+- Population density = population / area (sqmi)
+- Cases per 100k = (cases / population) * 100,000
+- Deaths per 100k = (deaths / population) * 100,000
+- Percent of cases resulting in death, or 'deathrate' = (deaths / cases) * 100
+- Impact points = ((1 * cases per 100k) + (5 * deaths per 100k)) * deathrate
+- Impact category:
+    - High = > mean + (.8*(standard deviation))
+    - Low = < mean - (.8*(standard deviation)
+    - Average = between mean +/- (.8*(standard deviation))
+
+
+### Modeling Techniques:
+
+1. **Multiclass regressors** 
+    - Tree-based models (decision tree, random forest)
+    - K-Nearest Neighbors
+    - Logistic Regression with `multi_class='multinomial'`
+<br>
+2. **Meta-classifiers**
+
+    1. **One vs Rest (OVR)** - one binary classification for each class vs the other classes, where the model with the highest probability score is used to predict the class of a new observation `n = number of classes`. <br>Automatically used by:
+        - Gradient Boost Classifier
+        - linear Support Vector Machines
+        - Logistic Regression with `multi_class='ovr'`
+
+    2. **One vs One (OVO)** - one binary classification for each pair of classes, where each new observation's class is predicted based on the majority vote amongst the n-models `n = 0.5* (n_classes* (n_classes - 1)))`. <br>Automatically used by:
+        - Support Vector Machines
+
+
+### Evaluation Metrics:
+
+Metrics for multiclass models could be calculated as either a macro average or a micro (weighted) average. Because training data is balanced using sklean.oversampling.SMOTE, I know my classes are balanced and can safely use the macro-average.
+
+- **Overfitting** - the difference between the accuracy score on the training data and the accuracy score on the testing data
+
+- **Accuracy** - measure of how many predictions the model gets right
+
+- **AUC** - an alternative measure of model accuracy
+
+- **F1 Score** - represents the harmonic mean of precision (how many predicted positives are true positives) and recall (how many actual positives were correctly predicted)
+
+
+____
+
+## Results
+
+<img src='./images/map_Impact of COVID-19 Pandemic by State - Points.jpg' align=center>
+
+Based on population-controlled cases, deaths, and mortality rate of COVID-19, the following states experienced "high" impact of COVID-19: Arizona, South Dakota, Louisiana, Alabama, Mississippi, Pennsylvania, New Jersey, Connecticut, Rhode Island, and Massachusetts.
+
+Given the health, social/demographic, economic, and COVID-19 measures, a K-Nearest Neighbors with optimal k=1 model predicted 82% of the validation dataset accurately. 
+
+When trained on the dataset including health measures, the health measures were considered the most important to the model's performance:
+
+- Life expectancy
+- Percent of population with poor or fair health 
+- Percent of population uninsured 
+
+<img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Full Feature Set).jpg' align=center>
+
+When trained again on a dataset without health measures, the below socioeconomic and social vulnerability features proved most important:
+
+- Vaccine hesitancy
+- Per capita income
+- Percent of population identifying as White
+- SVI sub-measures (1) housing type & transportation, and (2) minority status & language
+
+<img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Reduced Feature Set).jpg' align=center>
+
+
+_____
+
+## Recommendations
+
+- States should have accurate, frequent **measurement plans** in place for each of the features shown here to increase their community's vulnerability to extensive spread of illness and mortality. **What you measure, you can manage!**
+
+- When planning public health budgets, consider what **socioeconomic factors** - per capita income, minority population, vaccine hesitancy, etc. - may play a role in health outcomes and could be invested in with dollars allocated to "health."
+
+- In the case of a pandemic, the federal government should be able to **allocate emergency funds according to vulnerability** in order to slow the spread of illness and limit unnecessary deaths. Policy makers should consider changes now to support the ability to move quickly in case of emergency.
+
+_____
+
+## Future Enhancements
+
+- Rerun models with a slimmer feature set, avoiding multicollinearity
+- Analyze at the county level with updated county-level case and death counts
+- Incorporate ICU/hospital capacity in impact calculation
+
+
+_____
+
+
+### For further information:
+Please review the full EDA report [here](./EDA.ipynb) and modeling report [here,](./model.ipynb) or review the non-technical [presentation](./presentation.pdf)
+
+For any additional questions, please contact kcoop610@gmail.com.
+
+
+#### Repository Structure:
+
+```
+
+├── README.md            
+├── 1-EDA.ipynb           
+├── 2-model.ipynb           
+├── presentation.pdf                 
+├── data
+    └── source data files
+├── data_compressed
+    ├── merged_state_level_dataset.csv
+    └── compressed data files
+├── images
+    └── images 
+└── styles
+    └── custom.css 
+
+```

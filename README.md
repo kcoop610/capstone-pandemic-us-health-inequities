@@ -4,9 +4,9 @@
 
 Kristin Cooper | July, 2021 | DTSC-FT-022221 | Instructor: James Irving
 
-<img src='./images/sdoh_graphic.png' align=center>
+<img src='./images/sdoh_graphic.png' align=center width="600">
 
-<center> Equality vs. equity <br> <i> <a href="interactioninstitute.org">Interaction Institute for Social Change</a> // Angus Maguire</i> </center>
+<center> Social Determinants of Health <br> <i> <a href="https://health.gov/healthypeople/objectives-and-data/social-determinants-health">Healthy People 2030</a> // U.S. Department of Health and Human Services, Office of Disease Prevention and Health Promotion</i> </center>
 _______
 
 ## Purpose:
@@ -21,7 +21,7 @@ _______
 
 ## Data:
 
-A variety of health, economic, social, and demographic data from the CDC and University of Wisconsin Public Health Institute was combined with COVID-19 case, death, and vaccine measures.
+A variety of social determinants of health and demographic data from the CDC and University of Wisconsin Public Health Institute was combined with COVID-19 case, death, and vaccine measures.
 
 ### Features:
 
@@ -169,10 +169,10 @@ When trained on the full dataset and a limited dataset excluding health health m
         </ul>
      </td>
     <td><ul>
-        <li>Square mileage</li>
         <li>Racial breakdown</li>
         <li>Child population</li>
         <li>Education</li>
+        <li>Area (sqmi)</li>
         </ul>
      </td>
     </tr>
@@ -187,19 +187,22 @@ _____
 
 ## Recommendations
 
-- States should have accurate, frequent **measurement plans** in place for each of the features shown here to increase their community's vulnerability to extensive spread of illness and mortality. **What you measure, you can manage!**
+- **Measure what matters.**<br>States should have accurate, frequent measurement plans in place for each of the features shown here to increase their community's vulnerability to extensive spread of illness and mortality.  What you measure, you can manage.
 
-- When planning public health budgets, consider what **socioeconomic factors** - per capita income, minority population, vaccine hesitancy, etc. - may play a role in health outcomes and could be invested in with dollars allocated to "health."
+- **Extend the reach of health budgets to invest in socioeconomic and access barriers.**<br>When planning public health budgets, consider what social determinants - unemployment, education, income inequality, etc. - may play a role in health outcomes. 
 
-- In the case of a pandemic, the federal government should be able to **allocate emergency funds according to vulnerability** in order to slow the spread of illness and limit unnecessary deaths. Policy makers should consider changes now to support the ability to move quickly in case of emergency.
+- **Ensure epidemic procedures at all levels of government enable resources to be allocated based on vulnerability.**<br>In the case of a pandemic, organizations should be able to quickly decide and allocate emergency funds equitably - according to vulnerability - rather than equally - according to population - in order to achieve the most benefit from limited resources. 
 
 _____
 
 ## Future Enhancements
 
-- Rerun models with a slimmer feature set, avoiding multicollinearity
-- Analyze at the county level with updated county-level case and death counts
-- Incorporate ICU/hospital capacity, loss of employment, and local measure of economic activity in impact calculation
+- Analyze and model at the county level of detail to capture more specific community-level disparities
+
+- Conduct more rigorous feature selection to narrow down the features that most influence pandemic vulnerability
+
+- Incorporate ICU/hospital capacity and economic measures (job loss, change in economic activity, bankruptcy, etc) into Pandemic Impact calculation
+
 
 
 _____

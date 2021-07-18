@@ -4,7 +4,7 @@
 
 Kristin Cooper | July, 2021 | DTSC-FT-022221 | Instructor: James Irving
 
-<img src='./images/equity_equality.jpg' align=center>
+<img src='./images/sdoh_graphic.png' align=center>
 
 <center> Equality vs. equity <br> <i> <a href="interactioninstitute.org">Interaction Institute for Social Change</a> // Angus Maguire</i> </center>
 _______
@@ -105,7 +105,7 @@ From the source data, the following initial features were engineered:
 - Cases per 100k = (cases / population) * 100,000
 - Deaths per 100k = (deaths / population) * 100,000
 - Percent of cases resulting in death, or 'deathrate' = (deaths / cases) * 100
-- Impact points = ((1 * cases per 100k) + (5 * deaths per 100k)) * deathrate
+- Impact points = ((1 * cases per 100k) + (3 * deaths per 100k)) * deathrate
 - Impact category:
     - High = impact points > mean + (.8*(standard deviation))
     - Low = impact points < mean - (.8*(standard deviation)
@@ -145,25 +145,40 @@ ____
 
 Based on population-controlled cases, deaths, and mortality rate of COVID-19, the following states experienced "high" impact of COVID-19: Arizona, South Dakota, Louisiana, Alabama, Mississippi, Pennsylvania, New Jersey, Connecticut, Rhode Island, and Massachusetts.
 
-Given the health, social/demographic, economic, and COVID-19 measures, a K-Nearest Neighbors with optimal k=1 model predicted 82% of the validation dataset accurately. 
+Given the health, social/demographic, economic, and COVID-19 measures, a K-Nearest Neighbors with optimal k=1 model predicted 91% of the validation dataset accurately. 
 
-When trained on the dataset including health measures, the health measures were considered the most important to the model's performance:
+When trained on the full dataset and a limited dataset excluding health health measures, the following features were considered the most important to making accurate predictions:
 
-- Life expectancy
-- Percent of population with poor or fair health 
-- Percent of population hesitant or strongly hesitant towards COVID-19 vaccine
-- Percent of population uninsured 
+<table border="0">
+ <tr align=left alight=top>
+    <td><b style="font-size:20px">Economic Measures</b></td>
+    <td><b style="font-size:20px">Health Measures</b></td>
+    <td><b style="font-size:20px">Social & Demographic Measures</b></td>
+ </tr>
+ <tr>
+    <td><ul>
+        <li>Per capita income</li>
+        <li>Income inequality</li>
+        <li>Unemployment rate</li>
+        <li>Homeownership</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Smoking</li>
+        <li>Vaccine hesitancy</li>
+        </ul>
+     </td>
+    <td><ul>
+        <li>Square mileage</li>
+        <li>Racial breakdown</li>
+        <li>Child population</li>
+        <li>Education</li>
+        </ul>
+     </td>
+    </tr>
+</table>
 
 <img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Full Feature Set).jpg' align=center>
-
-When trained again on a dataset without health measures, the below socioeconomic and social vulnerability features proved most important:
-
-- Percent of population identifying as White
-- Per capita income
-- Percent of population hesitant or strongly hesitant towards COVID-19 vaccine
-- CDC's Social Vulnerability Index sub-measures 
-    - Housing type & transportation
-    - Minority status & language
 
 <img src='./images/feature importance_Top 10 Most Important Features to KNN Model (Reduced Feature Set).jpg' align=center>
 
